@@ -1,0 +1,77 @@
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Vote~Miss~Prépa </title>
+    <link rel="stylesheet" href="style_miss.css">
+</head>
+
+<body>
+
+    
+    <header >
+
+        <div class="top_bar">
+            <img class="logo" src="logo.png" alt="logo" >
+            <p> M~P__2024 - 2025</p>
+        </div>     
+
+    </header>
+
+    <main>
+
+        <section id="description-vote">
+
+            <h1> Grand évènement de Miss ~ Prépa à L'IMSP _ JCPGE </h1>
+            <p>
+                Ne manquez pas cette occasion unique de soutenir l'élection Miss Prépa ! Chaque vote de 100 Frs compte pour faire gagner votre ou vos candidate(s) préférée(s)
+                et contribue à son succès. Montrez votre engagement en votant dès maintenant - votre soutien pourrait faire toute la différence pour qu'elle(s) remporte(nt) 
+                la victoire. Agissons ensemble pour couronner la future Miss Prépa 💃💃 !!.
+            </p>
+
+        </section>
+
+        <section class="candidate">
+            <h1>Procéder au vote de votre candidate Miss ~ Prépa </h1>
+
+            <div class="candidates-list" id="candidatesContainer">
+
+                <!-- Les candidates seront ajoutées ici par JavaScript -->
+
+            </div>
+
+        </section>
+
+        <button class="vote-trigger" id="voteTrigger"><strong>Vote</strong></button>
+
+        <section class="vote-summary" id="voteSummary">
+            <div class="summary-content">
+                <div class="votes-header">
+                    <h4>Vos votes:</h4>
+                    <button id="toggleVoteCounts" class="toggle-btn">▼</button>
+                </div>
+                <div id="voteCounts"></div>
+                <button id="confirmVotes">Valider mes votes</button>
+                <button id="cancelVotes">Annuler</button>
+                <div class="Attentions">
+                    <p>
+                        <strong>NB :</strong> Nous vous informons que votre vote est validé après paiement
+                        et qu'il ne peut être annulé après ce dernier !!!...
+                    </p>
+                </div>
+            </div>
+        </section>
+        <script src="scrypte_miss.js"></script>
+
+    </main>
+
+
+</body>
+
+
+</html>
