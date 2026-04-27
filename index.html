@@ -1,77 +1,102 @@
-
-
-
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Vote~Miss~Prépa </title>
-    <link rel="stylesheet" href="style_miss.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote · Miss Prépa · IMSP 2025–2026</title>
+  <link rel="stylesheet" href="style_miss.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-    
-    <header >
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <div class="top-bar">
+      <div class="logo-area">
+        <div class="logo-placeholder">
+          <img src="logo.png" alt="Logo" onerror="this.style.display='none'; this.parentNode.textContent='MP'">
+        </div>
+        <span class="site-title">Miss · Prépa</span>
+      </div>
+      <div class="header-actions">
+        <a class="ranking-link" href="classement.html">Voir le classement</a>
+        <span class="session-badge">IMSP · JCPGE 2025–26</span>
+      </div>
+    </div>
+  </header>
 
-        <div class="top_bar">
-            <img class="logo" src="logo.png" alt="logo" >
-            <p> M~P__2024 - 2025</p>
-        </div>     
+  <main>
 
-    </header>
+    <!-- ═══ HERO ═══ -->
+    <section id="description-vote">
+      <div class="hero-eyebrow">Grand Évènement</div>
+      <h1>Élection <em>Miss Prépa</em><br>à l'IMSP · JCPGE</h1>
+      <p>
+         Soutenez votre candidate préférée — chaque vote à <strong>100 Frs</strong> compte. Votez dès 
+        maintenant et contribuez à couronner la future Miss Prépa 2025. 
+      </p>
+      <a class="ranking-link ranking-link-hero" href="classement.html">Consulter le classement actuel</a>
+      <div class="divider"></div>
+    </section>
 
-    <main>
+    <!-- ═══ CANDIDATES ═══ -->
+    <section class="candidate">
+      <p class="section-label">Candidates officielles : 14 candidates </p>
+      <h2>Votez pour votre favorite</h2>
+      <div class="candidates-list" id="candidatesContainer">
+        <!-- Les candidates sont injectées par JavaScript -->
+      </div>
+    </section>
 
-        <section id="description-vote">
+    <!-- ═══ FLOATING CART ═══ -->
+    <div class="cart-bar" id="cartBar">
+      <div class="cart-inner">
+        <p class="cart-summary">
+          <span id="cartCount">0</span> vote(s) &nbsp;·&nbsp; <span id="cartTotal">0</span> Frs
+        </p>
+        <button class="cart-btn" id="voteTrigger">Valider mes votes</button>
+      </div>
+    </div>
 
-            <h1> Grand évènement de Miss ~ Prépa à L'IMSP _ JCPGE </h1>
-            <p>
-                Ne manquez pas cette occasion unique de soutenir l'élection Miss Prépa ! Chaque vote de 100 Frs compte pour faire gagner votre ou vos candidate(s) préférée(s)
-                et contribue à son succès. Montrez votre engagement en votant dès maintenant - votre soutien pourrait faire toute la différence pour qu'elle(s) remporte(nt) 
-                la victoire. Agissons ensemble pour couronner la future Miss Prépa 💃💃 !!.
-            </p>
+    <!-- ═══ MODAL ═══ -->
+    <div class="modal-overlay" id="voteSummary">
+      <div class="modal">
+        <div class="modal-head">
+          <span class="modal-title">Récapitulatif</span>
+          <button class="modal-close" id="closeModal" aria-label="Fermer">✕</button>
+        </div>
+        <div class="modal-divider"></div>
 
-        </section>
+        <div class="votes-header">
+          <h4>Vos sélections :</h4>
+          <button id="toggleVoteCounts" class="toggle-btn">▼</button>
+        </div>
+        <div id="voteCounts"></div>
 
-        <section class="candidate">
-            <h1>Procéder au vote de votre candidate Miss ~ Prépa </h1>
+        <div class="summary-total-row">
+          <span class="total-label">Total à payer</span>
+          <span class="total-amount" id="modalTotal">0 Frs</span>
+        </div>
 
-            <div class="candidates-list" id="candidatesContainer">
+        <div class="Attentions">
+          <p>
+            <strong>NB :</strong> Le vote est définitivement validé après paiement
+            et ne peut pas être annulé par la suite.
+          </p>
+        </div>
 
-                <!-- Les candidates seront ajoutées ici par JavaScript -->
+        <button id="confirmVotes" class="btn-confirm">Confirmer &amp; Envoyer via WhatsApp</button>
+        <button id="cancelVotes" class="btn-cancel">Annuler</button>
+      </div>
+    </div>
 
-            </div>
+  </main>
 
-        </section>
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <p>© 2025–2026 · Miss Prépa · IMSP · JCPGE &nbsp;·&nbsp; Tous droits réservés</p>
+  </footer>
 
-        <button class="vote-trigger" id="voteTrigger"><strong>Vote</strong></button>
-
-        <section class="vote-summary" id="voteSummary">
-            <div class="summary-content">
-                <div class="votes-header">
-                    <h4>Vos votes:</h4>
-                    <button id="toggleVoteCounts" class="toggle-btn">▼</button>
-                </div>
-                <div id="voteCounts"></div>
-                <button id="confirmVotes">Valider mes votes</button>
-                <button id="cancelVotes">Annuler</button>
-                <div class="Attentions">
-                    <p>
-                        <strong>NB :</strong> Nous vous informons que votre vote est validé après paiement
-                        et qu'il ne peut être annulé après ce dernier !!!...
-                    </p>
-                </div>
-            </div>
-        </section>
-        <script src="scrypte_miss.js"></script>
-
-    </main>
-
-
+  <script src="scrypte_miss.js"></script>
 </body>
-
-
 </html>

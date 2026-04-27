@@ -1,83 +1,194 @@
-// Données des candidates (simulées)
+const VOTE_PRICE = 100;
+const MISS_VOTES_STORAGE_KEY = "missVotes";
+const RANKING_ACCESS_SESSION_KEY = "rankingAccessGranted";
+const RANKING_ACCESS_CODE = "IMSP2026";
+
 const candidates = [
-    { id: 1, name: "# Ida", photo: "etudiante_16.png", description: "Une âme passionnée déterminée à transformer ses rêves en réalité grâce à son courage et sa créativité." },
-    { id: 2, name: "# Esther A.", photo: "etudiante_1.jpeg", description: "Passionnée de mode, timide mais pleine d'humour, elle allie calme et gentillesse avec élégance." },
-    { id: 3, name: "# Esther K.", photo: "etudiante_6.jpeg", description: "À part la science, j'aime la nourriture, la lecture et je suis poète." },
-    { id: 4, name: "# Roliath", photo: "etudiante_7.jpeg", description: "Portée par une grâce infinie, elle puise sa force en celui qui la fortifie." },
-    { id: 6, name: "# Jeanelle", photo: "etudiante_5.jpeg", description: "Souriante et joviale, elle allie avec grâce bonne humeur et sérieux dans ses études." },
-    { id: 7, name: "# Hérita", photo: "etudiante_8.png", description: "Une jeune fille réservée au calme apaisant, dotée d'une grande générosité." },
-    { id: 10, name: "# Laurinda", photo: "etudiante_15.png", description: "Cerveau analytique et littéraire, elle excelle autant en mathématiques que dans la résolution d'énigmes." },
-    { id: 12, name: "# Exaucée", photo: "etudiante_14.jpeg", description: "Ambitieuse, passionnée de foi, portée par la grâce et guidée par la vision de Dieu." },
-    { id: 13, name: "# Rifiène", photo: "etudiante_9.png", description: "Un mélange harmonieux de créativité artistique et d'ambition méthodique." },
-    { id: 15, name: "# Firdaosse", photo: "etudiante_13.jpeg", description: "Mélomane au grand cœur, toujours prête à soutenir son prochain avec bienveillance." },
-    { id: 16, name: "# Océane", photo: "etudiante_18.png", description: "Optimiste invétérée, elle transforme chaque défi en opportunité avec studieuse passion." },
-    { id: 17, name: "# Gisèle", photo: "etudiante_11.jpeg", description: "Réservée mais tenace, elle cultive l'excellence à force de persévérance et de curiosité." },
-    { id: 19, name: "# Fumilayo", photo: "etudiante_10.png", description: "Engagée pour le développement durable de son pays, elle s'inspire de la nature et des livres." },
-    { id: 20, name: "# Hanyath", photo: "etudiante_17.jpeg", description: "Résilience incarnée, elle illumine son entourage par son altruisme et sa force tranquille." },
-    { id: 21, name: "# Christy", photo: "etudiante_12.jpeg", description: "Optimisme contagieux et gentillesse spontanée, elle sait adapter son caractère aux situations." },
-    { id: 23, name: "# Marielle", photo: "etudiante_2.jpeg", description: "Élégance discrète mais mémorable, son silence parle plus fort que les mots." },
-    { id: 25, name: "# Gertrude", photo: "etudiante_3.jpeg", description: "Sensible et audacieuse, elle navigue entre douceur et détermination au gré de ses aspirations." },
-    { id: 26, name: "# Belvida", photo: "belvida.jpeg", description: "Énigmatique poétesse en quête d'horizons lointains, elle écrit son destin à l'encre des étoiles." }
+    { id: 1, name: "OUSSOU Anaïs", photo: "images/Anais.jpg", description: "Plus qu'un visage, une vision. Plus qu'une candidate, une FEMME d'impact."},
+    { id: 2, name: "DOS SANTOS Marie-Belle", photo: "images/Marie-Belle.jpg", description: "Quand la foi guide l'ambition, l'impossible devient destin. Croyez en moi."},
+    { id: 3, name: "BIYAOU Fortunelle", photo: "images/Fortunelle.jpg", description: "Au-delà du miroir, une histoire et des valeurs. Voyons plus loin ensemble."},
+    { id: 4, name: "KINTOGANDOU Vanessa", photo: "images/Vanessa.jpg", description: "L'élégance qui agit, le cœur qui ose. Votez pour une couronne authentique."},
+    { id: 5, name: "CHABI-BOUKARI Zahidath", photo: "images/Zahidath.jpg", description: "L'élégance pour posture, le travail pour armure. Tenace aujourd'hui, triomphante demain."},
+    { id: 6, name: "Kévine DONTE", photo: "images/Kévine.jpg", description: "Je ne subis pas ma vie, je l'écris. L'encre de mon histoire, l'art de mon destin."},
+    { id: 7, name: "LOKO Ingrid", photo: "images/Ingrid.jpg", description: "La beauté captive, mais les valeurs marquent les esprits. Marquez le mien de votre vote."},
+    { id: 8, name: "NONWANON Eurielle", photo: "images/Eurielle.jpg", description: "L'ambition pour moteur, la détermination pour boussole. Visons ensemble l'élévation."},
+    { id: 9, name: "AMOUSSOU Isnelle", photo: "images/Isnelle.jpg", description: "La foi pour essence, la confiance pour puissance. Je suis la lumière qui s'impose à vous."},
+    { id: 10, name: "ADAM-TOURE Amiratou", photo: "images/Amirath.jpg", description: "Portée par la foi, propulsée par l'esprit. Votre vote est ma seule couronne."},
+    { id: 11, name: "HOUENOU Séphora", photo: "images/Séphora.jpg", description: "Forger l'avenir avec l'acier de la confiance. Ensemble vers un destin radieux."},
+    { id: 12, name: "AKOTENOU Octavie", photo: "images/Octavie.jpg", description: "Analyser, oser, rimer : là où l'intelligence se transforme en éloquence."},
+    { id: 13, name: "HOUNYO Ornella", photo: "images/Ornella.jpg", description: "Bâtir plutôt que briser : je fais de l'amour la force de mon engagement."},
+    { id: 14, name: "KEDOTE Shammel", photo: "images/Shammel.jpg", description: "Je n'ai peut-être pas la démarche ni l'allure parfaite mais j'ai une détermination face à toute épreuve. Votez pour l'authenticité ✨"}
 ];
 
-const container = document.getElementById('candidatesContainer');
-const voteCounts = document.getElementById('voteCounts');
-let selectedVotes = {};
+const container = document.getElementById("candidatesContainer");
+const voteCounts = document.getElementById("voteCounts");
+const cartBar = document.getElementById("cartBar");
+const cartCount = document.getElementById("cartCount");
+const cartTotal = document.getElementById("cartTotal");
+const modalTotal = document.getElementById("modalTotal");
+const voteSummary = document.getElementById("voteSummary");
+const toggleVoteCountsBtn = document.getElementById("toggleVoteCounts");
 
-candidates.forEach(candidate => {
-    const card = document.createElement('div');
-    card.className = 'candidate-card';
+const selectedVotes = {};
 
-    const formattedId = candidate.id.toString().padStart(3, '0');
+function getStoredVoteTotals() {
+    const rawVotes = localStorage.getItem(MISS_VOTES_STORAGE_KEY);
+    if (!rawVotes) {
+        return {};
+    }
 
-    card.innerHTML = `
-        <div class="candidate-info">
-            <div class="candidate-number">Candidate n°${formattedId}</div>
-            <img src="${candidate.photo}" alt="${candidate.name}" class="candidate-photo">
-            <div class="candidate-details">
-                <h3>${candidate.name}</h3>
-                <p>${candidate.description}</p>
-            </div>
-        </div>
-        <div class="vote-section">
-            <div class="vote-controls">
-                <button class="vote-btn vote-minus" data-id="${candidate.id}">-</button>
-                <input type="number" class="vote-input" data-id="${candidate.id}" value="0" min="0">
-                <button class="vote-btn vote-plus" data-id="${candidate.id}">+</button>
-            </div>
-        </div>
-    `;
-
-    container.appendChild(card);
-});
-
-container.addEventListener('click', function(e) {
-    const target = e.target;
-    const candidateId = target.getAttribute('data-id');
-
-    if (!candidateId) return;
-
-    if (target.classList.contains('vote-plus')) {
-        selectedVotes[candidateId] = (selectedVotes[candidateId] || 0) + 1;
-    } else if (target.classList.contains('vote-minus')) {
-        if (selectedVotes[candidateId] > 0) {
-            selectedVotes[candidateId]--;
+    try {
+        const parsedVotes = JSON.parse(rawVotes);
+        if (!parsedVotes || typeof parsedVotes !== "object" || Array.isArray(parsedVotes)) {
+            return {};
         }
+
+        return Object.entries(parsedVotes).reduce((cleanVotes, [candidateId, value]) => {
+            const safeValue = Math.max(0, Math.floor(Number(value) || 0));
+            if (safeValue > 0) {
+                cleanVotes[candidateId] = safeValue;
+            }
+            return cleanVotes;
+        }, {});
+    } catch (error) {
+        console.log("Erreur chargement votes cumulés");
+        return {};
+    }
+}
+
+function syncCandidateTotals() {
+    const storedVotes = getStoredVoteTotals();
+    candidates.forEach((candidate) => {
+        const persistedVotes = Number(storedVotes[candidate.id]) || 0;
+        candidate.totalVotes = candidate.baseVotes + persistedVotes;
+    });
+}
+
+function persistSelectionToTotalVotes() {
+    const storedVotes = getStoredVoteTotals();
+
+    candidates.forEach((candidate) => {
+        const newVotes = selectedVotes[candidate.id] || 0;
+        if (newVotes > 0) {
+            const currentVotes = Number(storedVotes[candidate.id]) || 0;
+            storedVotes[candidate.id] = currentVotes + newVotes;
+        }
+    });
+
+    localStorage.setItem(MISS_VOTES_STORAGE_KEY, JSON.stringify(storedVotes));
+    syncCandidateTotals();
+    updateCandidateTotalsDisplay();
+}
+
+function formatCandidateId(id) {
+    return id.toString().padStart(3, "0");
+}
+
+function openRankingAccessModal(onValidated) {
+    let overlay = document.getElementById("rankingAccessModal");
+
+    if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.id = "rankingAccessModal";
+        overlay.className = "access-modal-overlay";
+        overlay.innerHTML = `
+            <div class="access-modal" role="dialog" aria-modal="true" aria-labelledby="accessModalTitle">
+                <h3 id="accessModalTitle">Acces au classement</h3>
+                <p class="access-modal-subtitle">Entrez le code pour ouvrir la page classement.</p>
+                <form id="accessCodeForm" class="access-code-form">
+                    <input type="password" id="accessCodeInput" class="access-code-input" placeholder="Code d'acces" autocomplete="off" required>
+                    <p id="accessCodeError" class="access-code-error"></p>
+                    <div class="access-code-actions">
+                        <button type="button" id="accessCancelBtn" class="access-btn access-btn-secondary">Annuler</button>
+                        <button type="submit" class="access-btn access-btn-primary">Valider</button>
+                    </div>
+                </form>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+        overlay.addEventListener("click", (event) => {
+            if (event.target === overlay) {
+                overlay.classList.remove("visible");
+            }
+        });
     }
 
-    updateVoteDisplay(candidateId);
-    updateVoteCountsDisplay();
-});
+    const form = overlay.querySelector("#accessCodeForm");
+    const input = overlay.querySelector("#accessCodeInput");
+    const error = overlay.querySelector("#accessCodeError");
+    const cancelBtn = overlay.querySelector("#accessCancelBtn");
 
-container.addEventListener('input', function(e) {
-    if (e.target.classList.contains('vote-input')) {
-        const candidateId = e.target.getAttribute('data-id');
-        let value = parseInt(e.target.value);
-        selectedVotes[candidateId] = isNaN(value) || value < 0 ? 0 : value;
-        updateVoteDisplay(candidateId);
-        updateVoteCountsDisplay();
-    }
-});
+    form.onsubmit = (event) => {
+        event.preventDefault();
+        const codeValue = input.value.trim();
+
+        if (codeValue !== RANKING_ACCESS_CODE) {
+            error.textContent = "Code incorrect.";
+            input.focus();
+            input.select();
+            return;
+        }
+
+        sessionStorage.setItem(RANKING_ACCESS_SESSION_KEY, "1");
+        overlay.classList.remove("visible");
+        if (typeof onValidated === "function") {
+            onValidated();
+        }
+    };
+
+    cancelBtn.onclick = () => {
+        overlay.classList.remove("visible");
+    };
+
+    input.value = "";
+    error.textContent = "";
+    overlay.classList.add("visible");
+    window.requestAnimationFrame(() => input.focus());
+}
+
+function getTotalVotes() {
+    return Object.values(selectedVotes).reduce((sum, value) => sum + value, 0);
+}
+
+function getTotalAmount() {
+    return getTotalVotes() * VOTE_PRICE;
+}
+
+function renderCandidates() {
+    candidates.forEach((candidate) => {
+        const card = document.createElement("div");
+        card.className = "candidate-card";
+        card.innerHTML = `
+            <div class="candidate-info">
+                <div class="candidate-number">Candidate n°${formatCandidateId(candidate.id)}</div>
+                <img src="${candidate.photo}" alt="${candidate.name}" class="candidate-photo">
+                <div class="candidate-details">
+                    <h3>${candidate.name}</h3>
+                    <p>${candidate.description}</p>
+                </div>
+            </div>
+            <div class="vote-section">
+                <div class="vote-controls">
+                    <button class="vote-btn vote-minus" data-id="${candidate.id}">-</button>
+                    <input type="number" class="vote-input" data-id="${candidate.id}" value="0" min="0">
+                    <button class="vote-btn vote-plus" data-id="${candidate.id}">+</button>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(card);
+        selectedVotes[candidate.id] = 0;
+    });
+}
+
+function updateCandidateTotalsDisplay() {
+    document.querySelectorAll("[data-total-id]").forEach((counter) => {
+        const candidateId = Number(counter.getAttribute("data-total-id"));
+        const candidate = candidates.find((item) => item.id === candidateId);
+        counter.textContent = candidate ? candidate.totalVotes : 0;
+    });
+}
 
 function updateVoteDisplay(candidateId) {
     const input = document.querySelector(`.vote-input[data-id="${candidateId}"]`);
@@ -87,96 +198,158 @@ function updateVoteDisplay(candidateId) {
 }
 
 function updateVoteCountsDisplay() {
-    const votedCandidates = candidates.filter(c => selectedVotes[c.id] > 0);
+    const votedCandidates = candidates.filter((candidate) => selectedVotes[candidate.id] > 0);
 
     if (votedCandidates.length === 0) {
         voteCounts.innerHTML = '<p class="no-votes">Aucun vote enregistré</p>';
         return;
     }
 
-    let html = '<div class="votes-container">';
-    html += '<h4>Vos sélections :</h4>';
-    html += '<ul class="votes-list">';
+    const listItems = votedCandidates
+        .map(
+            (candidate) => `
+                <li class="vote-item">
+                    <span class="candidate-vote-name">${candidate.name}</span>
+                    <span class="vote-quantity">${selectedVotes[candidate.id]} vote(s)</span>
+                    <button class="remove-vote" data-id="${candidate.id}" aria-label="Retirer ${candidate.name}">x</button>
+                </li>
+            `
+        )
+        .join("");
 
-    votedCandidates.forEach(candidate => {
-        html += `
-            <li class="vote-item">
-                <span class="candidate-vote-name">${candidate.name}</span>
-                <span class="vote-quantity">${selectedVotes[candidate.id]} vote(s)</span>
-                <button class="remove-vote" data-id="${candidate.id}">×</button>
-            </li>
-        `;
-    });
-
-    html += '</ul>';
-    html += '<div class="total-votes">Total: ' + Object.values(selectedVotes).reduce((a, b) => a + b, 0) + ' vote(s)</div>';
-    html += '</div>';
-
-    voteCounts.innerHTML = html;
-
-    document.querySelectorAll('.remove-vote').forEach(button => {
-        button.addEventListener('click', function() {
-            const candidateId = this.getAttribute('data-id');
-            selectedVotes[candidateId] = 0;
-            updateVoteDisplay(candidateId);
-            updateVoteCountsDisplay();
-        });
-    });
+    voteCounts.innerHTML = `<ul class="votes-list">${listItems}</ul>`;
 }
 
-document.getElementById("confirmVotes").addEventListener("click", function() {
-    if (Object.values(selectedVotes).every(v => v === 0)) {
+function updateSummaryUI() {
+    const totalVotes = getTotalVotes();
+    const totalAmount = getTotalAmount();
+
+    cartCount.textContent = totalVotes;
+    cartTotal.textContent = totalAmount;
+    modalTotal.textContent = `${totalAmount} Frs`;
+
+    cartBar.classList.toggle("visible", totalVotes > 0);
+
+    updateVoteCountsDisplay();
+}
+
+function resetVotes() {
+    Object.keys(selectedVotes).forEach((id) => {
+        selectedVotes[id] = 0;
+        updateVoteDisplay(id);
+    });
+    updateSummaryUI();
+}
+
+function setVoteCount(candidateId, value) {
+    const safeValue = Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
+    selectedVotes[candidateId] = safeValue;
+    updateVoteDisplay(candidateId);
+    updateSummaryUI();
+}
+
+container.addEventListener("click", (event) => {
+    const target = event.target;
+    const candidateId = Number(target.getAttribute("data-id"));
+
+    if (!candidateId) {
+        return;
+    }
+
+    if (target.classList.contains("vote-plus")) {
+        setVoteCount(candidateId, (selectedVotes[candidateId] || 0) + 1);
+        return;
+    }
+
+    if (target.classList.contains("vote-minus")) {
+        setVoteCount(candidateId, (selectedVotes[candidateId] || 0) - 1);
+        return;
+    }
+});
+
+container.addEventListener("input", (event) => {
+    if (!event.target.classList.contains("vote-input")) {
+        return;
+    }
+
+    const candidateId = Number(event.target.getAttribute("data-id"));
+    const value = Number(event.target.value);
+    setVoteCount(candidateId, value);
+});
+
+voteCounts.addEventListener("click", (event) => {
+    if (!event.target.classList.contains("remove-vote")) {
+        return;
+    }
+
+    const candidateId = Number(event.target.getAttribute("data-id"));
+    setVoteCount(candidateId, 0);
+});
+
+toggleVoteCountsBtn.addEventListener("click", () => {
+    const isHidden = voteCounts.style.display === "none" || voteCounts.style.display === "";
+    voteCounts.style.display = isHidden ? "block" : "none";
+    toggleVoteCountsBtn.textContent = isHidden ? "▲" : "▼";
+});
+
+document.getElementById("voteTrigger").addEventListener("click", () => {
+    if (getTotalVotes() === 0) {
+        alert("Veuillez sélectionner au moins un vote avant de continuer.");
+        return;
+    }
+
+    voteSummary.classList.add("visible");
+});
+
+function closeModal() {
+    voteSummary.classList.remove("visible");
+}
+
+document.getElementById("closeModal").addEventListener("click", closeModal);
+document.getElementById("cancelVotes").addEventListener("click", () => {
+    resetVotes();
+    closeModal();
+});
+
+voteSummary.addEventListener("click", (event) => {
+    if (event.target === voteSummary) {
+        closeModal();
+    }
+});
+
+document.querySelectorAll('a[href="classement.html"]').forEach((rankingLink) => {
+    rankingLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        openRankingAccessModal(() => {
+            window.location.href = "classement.html";
+        });
+    });
+});
+
+document.getElementById("confirmVotes").addEventListener("click", () => {
+    if (getTotalVotes() === 0) {
         alert("Veuillez sélectionner au moins un vote.");
         return;
     }
 
+    persistSelectionToTotalVotes();
+
     const numeroWhatsApp = "22963071792";
     const votesText = candidates
-        .filter(c => selectedVotes[c.id] > 0)
-        .map(c => {
-            const formattedId = c.id.toString().padStart(3, '0');
-            return `#${formattedId} ${c.name}: ${selectedVotes[c.id]} vote(s)`;
-        })
+        .filter((candidate) => selectedVotes[candidate.id] > 0)
+        .map((candidate) => `${candidate.name} (N°${formatCandidateId(candidate.id)}): ${selectedVotes[candidate.id]} vote(s)`)
         .join("\n");
 
     const message = encodeURIComponent(
-        `Bonjour, voici mes votes pour Miss Prépa:\n\n${votesText}\n\nTotal: ${Object.values(selectedVotes).reduce((a, b) => a + b, 0)} vote(s)\n\nCordialement`
+        `Bonjour, voici mes votes pour Miss Prépa:\n\n${votesText}\n\nTotal votes: ${getTotalVotes()}\nMontant: ${getTotalAmount()} Frs\n\nCordialement`
     );
 
     window.open(`https://wa.me/${numeroWhatsApp}?text=${message}`, "_blank");
+    resetVotes();
+    closeModal();
 });
 
-document.getElementById("cancelVotes").addEventListener("click", function() {
-    candidates.forEach(candidate => {
-        selectedVotes[candidate.id] = 0;
-        updateVoteDisplay(candidate.id);
-    });
-    updateVoteCountsDisplay();
-});
-
-document.getElementById("toggleVoteCounts").addEventListener("click", function() {
-    const voteCountsDiv = document.getElementById("voteCounts");
-    voteCountsDiv.style.display = voteCountsDiv.style.display === "none" ? "block" : "none";
-    this.textContent = voteCountsDiv.style.display === "none" ? "▼" : "▲";
-});
-
-document.getElementById('voteTrigger').addEventListener('click', function() {
-    document.getElementById('voteSummary').classList.toggle('visible');
-});
-
-updateVoteCountsDisplay();
-
-// Animation IntersectionObserver (optionnel)
-const observerOptions = { threshold: 0.1 };
-const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
-
-document.querySelectorAll('.animate-on-scroll').forEach(element => {
-    observer.observe(element);
-});
+syncCandidateTotals();
+renderCandidates();
+updateSummaryUI();
+voteCounts.style.display = "none";

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classement · Miss Prépa · IMSP 2025–2026</title>
+  <link rel="stylesheet" href="classement.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="ranking-header">
+    <div class="ranking-topbar">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span class="brand-title">Classement Miss Prépa</span>
+      </div>
+      <a href="index.html" class="back-link">Retour aux votes</a>
+    </div>
+  </header>
+
+  <main class="ranking-main">
+    <section class="intro">
+      <p class="intro-label">Mise à jour en direct</p>
+      <h1>Top des candidates selon les votes cumulés</h1>
+      <p id="lastUpdated" class="updated-at"></p>
+    </section>
+
+    <section class="podium-section">
+      <h2>Podium</h2>
+      <div id="podium" class="podium"></div>
+    </section>
+
+    <section class="table-section">
+      <h2>Classement complet</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Rang</th>
+              <th>Candidate</th>
+              <th>Numéro</th>
+              <th>Votes</th>
+            </tr>
+          </thead>
+          <tbody id="rankingTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="classement.js"></script>
+</body>
+</html>
