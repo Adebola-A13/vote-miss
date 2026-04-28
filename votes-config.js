@@ -1,7 +1,7 @@
 // Unique point d'edition admin pour les votes valides manuels.
 (function () {
     const rawVotes = {
-        1: 10, // OUSSOU Anais
+        1: 0, // OUSSOU Anais
         2: 0, // DOS SANTOS Marie-Belle
         3: 0, // BIYAOU Fortunelle
         4: 0, // KINTOGANDOU Vanessa
