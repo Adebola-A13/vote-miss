@@ -86,21 +86,28 @@ async function ensureRankingAccess() {
 }
 
 const candidates = [
-    { id: 1, name: "OUSSOU Anaïs", photo: "images/Anais.jpg", baseVotes: 0 },
-    { id: 2, name: "DOS SANTOS Marie-Belle", photo: "images/Marie-Belle.jpg", baseVotes: 0 },
-    { id: 3, name: "BIYAOU Fortunelle", photo: "images/Fortunelle.jpg", baseVotes: 0 },
-    { id: 4, name: "KINTOGANDOU Vanessa", photo: "images/Vanessa.jpg", baseVotes: 0 },
-    { id: 5, name: "CHABI-BOUKARI Zahidath", photo: "images/Zahidath.jpg", baseVotes: 0 },
-    { id: 6, name: "Kévine DONTE", photo: "images/Kévine.jpg", baseVotes: 0 },
-    { id: 7, name: "LOKO Ingrid", photo: "images/Ingrid.jpg", baseVotes: 0 },
-    { id: 8, name: "NONWANON Eurielle", photo: "images/Eurielle.jpg", baseVotes: 0 },
-    { id: 9, name: "AMOUSSOU Isnelle", photo: "images/Isnelle.jpg", baseVotes: 0 },
-    { id: 10, name: "ADAM-TOURE Amiratou", photo: "images/Amirath.jpg", baseVotes: 0 },
-    { id: 11, name: "HOUENOU Séphora", photo: "images/Séphora.jpg", baseVotes: 0 },
-    { id: 12, name: "AKOTENOU Octavie", photo: "images/Octavie.jpg", baseVotes: 0 },
-    { id: 13, name: "HOUNYO Ornella", photo: "images/Ornella.jpg", baseVotes: 0 },
-    { id: 14, name: "KEDOTE Shammel", photo: "images/Shammel.jpg", baseVotes: 0 }
+    { id: 1, name: "OUSSOU Anaïs", photo: "images/Anais.jpg" },
+    { id: 2, name: "DOS SANTOS Marie-Belle", photo: "images/Marie-Belle.jpg" },
+    { id: 3, name: "KPODANHOUE Ange Michelle", photo: "images/Michelle.jpeg" },
+    { id: 4, name: "KINTOGANDOU Vanessa", photo: "images/Vanessa.jpg" },
+    { id: 5, name: "CHABI-BOUKARI Zahidath", photo: "images/Zahidath.jpg" },
+    { id: 6, name: "Kévine DONTE", photo: "images/Kévine.jpg" },
+    { id: 7, name: "LOKO Ingrid", photo: "images/Ingrid.jpg" },
+    { id: 8, name: "NONWANON Eurielle", photo: "images/eurielle.jpg" },
+    { id: 9, name: "AMOUSSOU Isnelle", photo: "images/Isnelle.jpg" },
+    { id: 10, name: "ADAM-TOURE Amiratou", photo: "images/Amirath.jpg" },
+    { id: 11, name: "HOUENOU Séphora", photo: "images/sephora.jpg" },
+    { id: 12, name: "AKOTENOU Octavie", photo: "images/Octavie.jpg" },
+    { id: 13, name: "HOUNYO Ornella", photo: "images/Ornella.jpg" },
+    { id: 14, name: "KEDOTE Shammel", photo: "images/Shammel.jpg" }
 ];
+
+const manualValidatedVotes = window.MANUAL_VALIDATED_VOTES || {};
+
+function getAdminValidatedVotes(candidateId) {
+    const adminVotes = Number(manualValidatedVotes[candidateId]);
+    return Number.isFinite(adminVotes) ? Math.max(0, Math.floor(adminVotes)) : 0;
+}
 
 const podiumContainer = document.getElementById("podium");
 const rankingTableBody = document.getElementById("rankingTableBody");
@@ -142,7 +149,7 @@ function getRankedCandidates() {
             const persistedVotes = Number(storedVotes[candidate.id]) || 0;
             return {
                 ...candidate,
-                totalVotes: candidate.baseVotes + persistedVotes
+                totalVotes: getAdminValidatedVotes(candidate.id) + persistedVotes
             };
         })
         .sort((a, b) => {

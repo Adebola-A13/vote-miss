@@ -2,19 +2,20 @@ const VOTE_PRICE = 100;
 const MISS_VOTES_STORAGE_KEY = "missVotes";
 const RANKING_ACCESS_SESSION_KEY = "rankingAccessGranted";
 const RANKING_ACCESS_CODE = "IMSP2026";
+const AUTO_REPLY_DELAY_MS = 1600;
 
 const candidates = [
     { id: 1, name: "OUSSOU Anaïs", photo: "images/Anais.jpg", description: "Plus qu'un visage, une vision. Plus qu'une candidate, une FEMME d'impact."},
     { id: 2, name: "DOS SANTOS Marie-Belle", photo: "images/Marie-Belle.jpg", description: "Quand la foi guide l'ambition, l'impossible devient destin. Croyez en moi."},
-    { id: 3, name: "BIYAOU Fortunelle", photo: "images/Fortunelle.jpg", description: "Au-delà du miroir, une histoire et des valeurs. Voyons plus loin ensemble."},
+    { id: 3, name: "KPODANHOUE Ange Michelle", photo: "images/Michelle.jpg", description: "Femme :Pas besoin de permission pour briller, votez pour une lumière  douce et authentique."},
     { id: 4, name: "KINTOGANDOU Vanessa", photo: "images/Vanessa.jpg", description: "L'élégance qui agit, le cœur qui ose. Votez pour une couronne authentique."},
     { id: 5, name: "CHABI-BOUKARI Zahidath", photo: "images/Zahidath.jpg", description: "L'élégance pour posture, le travail pour armure. Tenace aujourd'hui, triomphante demain."},
     { id: 6, name: "Kévine DONTE", photo: "images/Kévine.jpg", description: "Je ne subis pas ma vie, je l'écris. L'encre de mon histoire, l'art de mon destin."},
     { id: 7, name: "LOKO Ingrid", photo: "images/Ingrid.jpg", description: "La beauté captive, mais les valeurs marquent les esprits. Marquez le mien de votre vote."},
-    { id: 8, name: "NONWANON Eurielle", photo: "images/Eurielle.jpg", description: "L'ambition pour moteur, la détermination pour boussole. Visons ensemble l'élévation."},
+    { id: 8, name: "NONWANON Eurielle", photo: "images/eurielle.jpg", description: "L'ambition pour moteur, la détermination pour boussole. Visons ensemble l'élévation."},
     { id: 9, name: "AMOUSSOU Isnelle", photo: "images/Isnelle.jpg", description: "La foi pour essence, la confiance pour puissance. Je suis la lumière qui s'impose à vous."},
     { id: 10, name: "ADAM-TOURE Amiratou", photo: "images/Amirath.jpg", description: "Portée par la foi, propulsée par l'esprit. Votre vote est ma seule couronne."},
-    { id: 11, name: "HOUENOU Séphora", photo: "images/Séphora.jpg", description: "Forger l'avenir avec l'acier de la confiance. Ensemble vers un destin radieux."},
+    { id: 11, name: "HOUENOU Séphora", photo: "images/sephora.jpg", description: "Forger l'avenir avec l'acier de la confiance. Ensemble vers un destin radieux."},
     { id: 12, name: "AKOTENOU Octavie", photo: "images/Octavie.jpg", description: "Analyser, oser, rimer : là où l'intelligence se transforme en éloquence."},
     { id: 13, name: "HOUNYO Ornella", photo: "images/Ornella.jpg", description: "Bâtir plutôt que briser : je fais de l'amour la force de mon engagement."},
     { id: 14, name: "KEDOTE Shammel", photo: "images/Shammel.jpg", description: "Je n'ai peut-être pas la démarche ni l'allure parfaite mais j'ai une détermination face à toute épreuve. Votez pour l'authenticité ✨"}
@@ -56,14 +57,6 @@ function getStoredVoteTotals() {
     }
 }
 
-function syncCandidateTotals() {
-    const storedVotes = getStoredVoteTotals();
-    candidates.forEach((candidate) => {
-        const persistedVotes = Number(storedVotes[candidate.id]) || 0;
-        candidate.totalVotes = candidate.baseVotes + persistedVotes;
-    });
-}
-
 function persistSelectionToTotalVotes() {
     const storedVotes = getStoredVoteTotals();
 
@@ -76,8 +69,6 @@ function persistSelectionToTotalVotes() {
     });
 
     localStorage.setItem(MISS_VOTES_STORAGE_KEY, JSON.stringify(storedVotes));
-    syncCandidateTotals();
-    updateCandidateTotalsDisplay();
 }
 
 function formatCandidateId(id) {
@@ -179,14 +170,6 @@ function renderCandidates() {
 
         container.appendChild(card);
         selectedVotes[candidate.id] = 0;
-    });
-}
-
-function updateCandidateTotalsDisplay() {
-    document.querySelectorAll("[data-total-id]").forEach((counter) => {
-        const candidateId = Number(counter.getAttribute("data-total-id"));
-        const candidate = candidates.find((item) => item.id === candidateId);
-        counter.textContent = candidate ? candidate.totalVotes : 0;
     });
 }
 
@@ -305,6 +288,35 @@ function closeModal() {
     voteSummary.classList.remove("visible");
 }
 
+function generateVoteReference() {
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const randomPart = Math.random().toString(36).slice(2, 7).toUpperCase();
+    return `VM-${timestamp}-${randomPart}`;
+}
+
+function showAutoReplyToast(reference, totalVotes, totalAmount) {
+    let toast = document.getElementById("autoReplyToast");
+
+    if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "autoReplyToast";
+        toast.className = "auto-reply-toast";
+        document.body.appendChild(toast);
+    }
+
+    toast.innerHTML = `
+        <p><strong>Message automatique :</strong> Votre vote est en cours de traitement.</p>
+        <p>Reference: <strong>${reference}</strong></p>
+        <p>Total: ${totalVotes} vote(s) · ${totalAmount} Frs</p>
+    `;
+
+    toast.classList.add("visible");
+    clearTimeout(showAutoReplyToast.hideTimer);
+    showAutoReplyToast.hideTimer = setTimeout(() => {
+        toast.classList.remove("visible");
+    }, 6500);
+}
+
 document.getElementById("closeModal").addEventListener("click", closeModal);
 document.getElementById("cancelVotes").addEventListener("click", () => {
     resetVotes();
@@ -332,24 +344,31 @@ document.getElementById("confirmVotes").addEventListener("click", () => {
         return;
     }
 
+    const totalVotes = getTotalVotes();
+    const totalAmount = getTotalAmount();
+    const voteReference = generateVoteReference();
+
     persistSelectionToTotalVotes();
 
-    const numeroWhatsApp = "22963071792";
+    const numeroWhatsApp = "2290158078669";
     const votesText = candidates
         .filter((candidate) => selectedVotes[candidate.id] > 0)
         .map((candidate) => `${candidate.name} (N°${formatCandidateId(candidate.id)}): ${selectedVotes[candidate.id]} vote(s)`)
         .join("\n");
 
     const message = encodeURIComponent(
-        `Bonjour, voici mes votes pour Miss Prépa:\n\n${votesText}\n\nTotal votes: ${getTotalVotes()}\nMontant: ${getTotalAmount()} Frs\n\nCordialement`
+        `Bonjour, voici mes votes pour Miss Prépa:\n\n${votesText}\n\nTotal votes: ${totalVotes}\nMontant: ${totalAmount} Frs\nReference: ${voteReference}\n\nCordialement`
     );
 
     window.open(`https://wa.me/${numeroWhatsApp}?text=${message}`, "_blank");
+    setTimeout(() => {
+        showAutoReplyToast(voteReference, totalVotes, totalAmount);
+    }, AUTO_REPLY_DELAY_MS);
+
     resetVotes();
     closeModal();
 });
 
-syncCandidateTotals();
 renderCandidates();
 updateSummaryUI();
 voteCounts.style.display = "none";
