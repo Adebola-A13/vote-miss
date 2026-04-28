@@ -350,7 +350,7 @@ document.getElementById("confirmVotes").addEventListener("click", () => {
 
     persistSelectionToTotalVotes();
 
-    const numeroWhatsApp = "2290158078669";
+    const numeroWhatsApp = "2290158184796";
     const votesText = candidates
         .filter((candidate) => selectedVotes[candidate.id] > 0)
         .map((candidate) => `${candidate.name} (N°${formatCandidateId(candidate.id)}): ${selectedVotes[candidate.id]} vote(s)`)
