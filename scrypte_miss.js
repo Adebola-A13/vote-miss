@@ -7,7 +7,7 @@ const AUTO_REPLY_DELAY_MS = 1600;
 const candidates = [
     { id: 1, name: "OUSSOU Anaïs", photo: "images/Anais.jpg", description: "Plus qu'un visage, une vision. Plus qu'une candidate, une FEMME d'impact."},
     { id: 2, name: "DOS SANTOS Marie-Belle", photo: "images/Marie-Belle.jpg", description: "Quand la foi guide l'ambition, l'impossible devient destin. Croyez en moi."},
-    { id: 3, name: "KPODANHOUE Ange Michelle", photo: "images/Michelle.jpg", description: "Femme :Pas besoin de permission pour briller, votez pour une lumière  douce et authentique."},
+    { id: 3, name: "KPODANHOUE Ange Michelle", photo: "images/Michelle.jpeg", description: "Femme :Pas besoin de permission pour briller, votez pour une lumière  douce et authentique."},
     { id: 4, name: "KINTOGANDOU Vanessa", photo: "images/Vanessa.jpg", description: "L'élégance qui agit, le cœur qui ose. Votez pour une couronne authentique."},
     { id: 5, name: "CHABI-BOUKARI Zahidath", photo: "images/Zahidath.jpg", description: "L'élégance pour posture, le travail pour armure. Tenace aujourd'hui, triomphante demain."},
     { id: 6, name: "Kévine DONTE", photo: "images/Kévine.jpg", description: "Je ne subis pas ma vie, je l'écris. L'encre de mon histoire, l'art de mon destin."},
