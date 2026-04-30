@@ -14,7 +14,8 @@
         11: 0, // HOUENOU Sephora
         12: 0, // AKOTENOU Octavie
         13: 0, // HOUNYO Ornella
-        14: 0 // KEDOTE Shammel
+        14: 0, // KEDOTE Shammel
+        15: 0 // BIYAOU Fortunelle
     };
 
     window.MANUAL_VALIDATED_VOTES = Object.entries(rawVotes).reduce((safeVotes, [candidateId, value]) => {

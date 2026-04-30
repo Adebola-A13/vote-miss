@@ -99,7 +99,8 @@ const candidates = [
     { id: 11, name: "HOUENOU Séphora", photo: "images/sephora.jpg" },
     { id: 12, name: "AKOTENOU Octavie", photo: "images/Octavie.jpg" },
     { id: 13, name: "HOUNYO Ornella", photo: "images/Ornella.jpg" },
-    { id: 14, name: "KEDOTE Shammel", photo: "images/Shammel.jpg" }
+    { id: 14, name: "KEDOTE Shammel", photo: "images/Shammel.jpg" },
+    { id: 15, name: "BIYAOU Fortunelle", photo:"images/Fortunelle.jpg"}
 ];
 
 const manualValidatedVotes = window.MANUAL_VALIDATED_VOTES || {};
