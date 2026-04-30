@@ -19,7 +19,7 @@ const candidates = [
     { id: 12, name: "AKOTENOU Octavie", photo: "images/Octavie.jpg", description: "Analyser, oser, rimer : là où l'intelligence se transforme en éloquence."},
     { id: 13, name: "HOUNYO Ornella", photo: "images/Ornella.jpg", description: "Bâtir plutôt que briser : je fais de l'amour la force de mon engagement."},
     { id: 14, name: "KEDOTE Shammel", photo: "images/Shammel.jpg", description: "Je n'ai peut-être pas la démarche ni l'allure parfaite mais j'ai une détermination face à toute épreuve. Votez pour l'authenticité ✨"},
-    { id: 15, name: "BIYAOU Fortunelle", photo:"images/Fortunelle.jpg", description: "Une femme : une histoire ,des valeurs, une foi inébranlable. Ensemble, voyons plus loin que le reflet dans un miroir"}
+    { id: 15, name: "BIYAOU Fortunelle", photo:"images/Fortunelle.jpeg", description: "Une femme : une histoire ,des valeurs, une foi inébranlable. Ensemble, voyons plus loin que le reflet dans un miroir"}
 ];
 
 const container = document.getElementById("candidatesContainer");
