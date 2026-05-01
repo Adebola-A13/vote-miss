@@ -15,7 +15,7 @@
         12: 2, // AKOTENOU Octavie
         13: 2, // HOUNYO Ornella
         14: 0, // KEDOTE Shammel
-        15: 106, // BIYAOU Fortunelle
+        15: 206, // BIYAOU Fortunelle
     };
 
     window.MANUAL_VALIDATED_VOTES = Object.entries(rawVotes).reduce((safeVotes, [candidateId, value]) => {
